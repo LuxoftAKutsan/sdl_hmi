@@ -570,9 +570,12 @@ SDL.RadioView = Em.ContainerView
       genre: '',
       info: Em.View.extend(
         {
-          HDRadio: function() {
-            return (SDL.RadioModel.radioControlCheckboxes.availableHDs > 0);
+          HDRadioMaxChannels: function() {
+            return (SDL.RadioModel.radioControlCheckboxes.availableHDs);
           }.property('SDL.RadioModel.radioControlCheckboxes.availableHDs'),
+          HDRadioBand: function() {
+            return (SDL.RadioModel.lastOptionParams.band == "FM");
+          }.property('SDL.RadioModel.lastOptionParams.band'),
           HDChannel1: function() {
             return (SDL.RadioModel.lastOptionParams.hdChannel == 1);
           }.property('SDL.RadioModel.lastOptionParams.hdChannel'),
@@ -619,7 +622,8 @@ SDL.RadioView = Em.ContainerView
               '{{#with view}}' +
               '<div class="track-info">' +
               '<div class = "HDRadio" style="display: inline-flex; align-items: center;">' + 
-              '{{#if HDRadio}}' +
+              '{{#if HDRadioBand}}' +
+              '{{#if HDRadioMaxChannels}}' +
               '<img src="images/media/hd_logo.png" style="width:27px;height:27px;">' +
               '{{#if HDChannel1Availability}}' +
               '{{#if HDChannel1}}' +
@@ -640,6 +644,7 @@ SDL.RadioView = Em.ContainerView
               '<span style="padding: 5px;color: orange;"> 3 </span>' + 
               '{{else}}' +
               '<span style="padding: 5px;"> 3 </span>' + 
+              '{{/if}}' +
               '{{/if}}' +
               '{{/if}}' +
               '{{/if}}' +
